@@ -4,41 +4,27 @@ import java.util.*;
 import java.io.*;
 
 public class Main_bj_11000_강의실배정 {
-	static class Class implements Comparable<Class>{
-		int start, end;
-		public Class(int start, int end) {
-			this.start = start;
-			this.end = end;
-		}
-		@Override
-		public int compareTo(Class o) {
-			int val = this.end - o.end;
-			if(val != 0) return val;
-			return this.start - o.start;
-		}
-		
-	}
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
-		Class[] classes = new Class[N];
+		int[][] lectures = new int[N][2];
 		for(int i =0 ; i< N ; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-			classes[i] = new Class(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
+			lectures[i][0] = Integer.parseInt(st.nextToken());
+			lectures[i][1] = Integer.parseInt(st.nextToken());
 		}
-		Arrays.sort(classes);
-		List<Integer> time = new ArrayList<Integer>();
-		time.add(classes[0].end);
-		for(int i = 1; i<classes.length ; i++) {
-			boolean flag = false;
-			for(int j = 0 ; j < time.size() ; j++) {
-				if(time.get(j) <= classes[i].start) {
-					time.set(j, classes[i].end);
-					flag = true;
-					break;
-				}
+		Arrays.sort(lectures, new Comparator<int[]>() {
+			@Override
+			public int compare(int[] o1, int[] o2) {
+				if(o1[0] == o2[0]) return o1[1] - o2[1];
+				return o1[0] - o2[0];
 			}
-			if(!flag) time.add(classes[i].end);
+		});
+		PriorityQueue<Integer> time = new PriorityQueue<>();
+		time.offer(lectures[0][1]);
+		for(int i = 1; i<lectures.length ; i++) {
+			if(time.peek() <= lectures[i][0]) time.poll();
+			time.offer(lectures[i][1]);
 		}
 		System.out.println(time.size());
 	}
