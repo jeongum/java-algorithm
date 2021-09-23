@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 
-public class Solution_bj_3190_뱀 {
+public class Main_bj_3190_뱀 {
 	static int[] di = {0,1,0,-1};
 	static int[] dj = {1,0,-1,0};
 	public static void main(String[] args) throws Exception{
@@ -61,7 +61,7 @@ public class Solution_bj_3190_뱀 {
 				map[tmp[0]][tmp[1]] = 0;	//해당 주소의 맵 정보 0으로 재설정
 			}
 			snake.offerFirst(new int[] {ni,nj});	//항상 머리를 늘림 
-			map[ni][nj] = 2;	// 뱀이 있는 곳에 맵 정보를 2로 재설정
+			map[ni][nj] = 2;	// 뱀이 있는 곳에 맵 정보를 2로 재설정 
 			time ++;
 		}
 		System.out.println(time+1);
