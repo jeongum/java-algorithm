@@ -1,9 +1,9 @@
-package tree;
+package graph;
 
 import java.io.*;
 import java.util.*;
 
-public class Main_bj_9205_맥주마시면서걸어가기_서울_12반_이정음 {
+public class Main_bj_9205_맥주마시면서걸어가기 {
 
 	public static void main(String[] args) throws Exception
 	{

@@ -3,7 +3,7 @@ package graph;
 import java.io.*;
 import java.util.*;
 
-public class Main_jo_1681_해밀턴순환회로_서울_12반_이정음 {
+public class Main_jo_1681_해밀턴순환회로 {
 	static int N, res;
 	static int[][] map;
 	static boolean[] visited;

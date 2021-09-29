@@ -3,7 +3,7 @@ package bfs_dfs;
 import java.io.*;
 import java.util.*;
 
-public class Solution_1767_프로세서연결하기_서울_12반_이정음 {
+public class Solution_1767_프로세서연결하기 {
 	static int[] di = {-1,0,1,0};
 	static int[] dj = {0,1,0,-1};
 	static int N, maxCore, minLen;

@@ -1,9 +1,9 @@
-package tree;
+package graph;
 
 import java.io.*;
 import java.util.*;
 
-public class Solution_d6_1263_사람네트워크2_서울_12반_이정음 {
+public class Solution_d6_1263_사람네트워크2 {
 
 	public static void main(String[] args) throws Exception{
 		//입력받기
