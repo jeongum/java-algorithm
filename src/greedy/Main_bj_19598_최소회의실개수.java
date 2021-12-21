@@ -22,7 +22,7 @@ public class Main_bj_19598_최소회의실개수 {
 				return o1[0] - o2[0];
 			}
 		});
-		
+
 		PriorityQueue<Integer> pq = new PriorityQueue<>();
 		pq.offer(meetings.get(0)[1]);
 		for(int i = 1 ; i < meetings.size() ; i++) {
