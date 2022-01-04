@@ -1,4 +1,4 @@
-package perm_comb_subset;
+package brute_force;
 
 import java.util.*;
 import java.io.*;

@@ -1,4 +1,4 @@
-package graph;
+package graph_traversal;
 
 import java.util.*;
 import java.io.*;
@@ -47,7 +47,6 @@ public class Main_bj_2178_미로탐색 {
 						visited[ni][nj] = true;
 					}
 				}
-				
 			}
 		}
 	}

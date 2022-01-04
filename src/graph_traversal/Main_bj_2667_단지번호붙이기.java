@@ -1,4 +1,4 @@
-package graph;
+package graph_traversal;
 
 import java.io.*;
 import java.util.*;
