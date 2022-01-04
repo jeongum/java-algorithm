@@ -1,4 +1,4 @@
-package graph;
+package mst;
 
 import java.io.*;
 import java.util.*;

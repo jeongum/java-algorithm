@@ -28,6 +28,11 @@ public class Main_bj_15486_퇴사2 {
 				dp[i+time[i]] = Math.max(dp[i+time[i]], max+price[i]);
 			}
 		}
+		/* 뒤에서부터 해보기 */
+		for(int i = N ; i >= 1 ; i--) {
+			if(i + time[i] <= N) {
+			}
+		}
 		
 		System.out.println(max);
 	}
