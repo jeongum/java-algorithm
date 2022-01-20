@@ -10,9 +10,10 @@ public class Main_bj_15787_기차가어둠을헤치고은하수를 {
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
 		boolean[][] train = new boolean[N][20];
+		
 		for(int i =0 ; i < M ; i++) {
 			st = new StringTokenizer(br.readLine());
-			int inst = Integer.parseInt(st.nextToken());
+			int inst = Integer.parseInt(st.nextToken());	
 			int num = Integer.parseInt(st.nextToken())-1;
 			switch(inst) {
 				case 1:{
@@ -41,6 +42,7 @@ public class Main_bj_15787_기차가어둠을헤치고은하수를 {
 				}
 			}
 		}
+		
 		List<String> passStat = new ArrayList<String>();
 		next:for(int i =0 ; i < N ; i++) {
 			StringBuilder sb =  new StringBuilder();
