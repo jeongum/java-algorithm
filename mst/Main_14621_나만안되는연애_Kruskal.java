@@ -1,8 +1,8 @@
 package mst;
 
-import java.util.*;
 import java.io.*;
-public class Main_bj_1922_네트워크연결_Kruskal {
+import java.util.*;
+public class Main_14621_나만안되는연애_Kruskal {
     static class Edge implements Comparable<Edge>{
         int x, y, cost;
         public Edge(int x, int y, int cost) {
@@ -17,15 +17,23 @@ public class Main_bj_1922_네트워크연결_Kruskal {
         }
     }
     static int N, M;
+    static boolean[] gender;
     static Edge[] network;
     static int[] parent;
     public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        M = Integer.parseInt(br.readLine());
-        parent = new int[N];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        gender = new boolean[N];
         network = new Edge[M];
-        StringTokenizer st = null;
+        parent = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for(int i =0 ; i < N ; i++){
+            char g = st.nextToken().charAt(0);
+            gender[i] = g=='W'?true:false;
+        }
+
         for(int i =0 ; i < M ; i++){
             st = new StringTokenizer(br.readLine());
             network[i] = new Edge(Integer.parseInt(st.nextToken())-1,Integer.parseInt(st.nextToken())-1,Integer.parseInt(st.nextToken()));
@@ -35,29 +43,30 @@ public class Main_bj_1922_네트워크연결_Kruskal {
 
         makeSet();
 
-        int cnt = 0 , result = 0;
-        for(Edge n:network){
-            if(unionSet(n.x, n.y)){
-                result += n.cost;
+        int result = 0, cnt = 0, tcnt = 0;
+        for(Edge e : network){
+            if(unionSet(e.x, e.y)){
+                result += e.cost;
                 if(++cnt == N-1) break;
             }
+            tcnt++;
         }
 
-        System.out.println(result);
-
+        System.out.println(tcnt == M? -1:result);
     }
 
     private static boolean unionSet(int x, int y) {
-        int px = findParent(x);
-        int py = findParent(y);
+        if(gender[x] == gender[y]) return false;
+        int px = findP(x);
+        int py = findP(y);
         if(px == py) return false;
         parent[py] = px;
         return true;
     }
 
-    private static int findParent(int x) {
+    private static int findP(int x) {
         if(parent[x] == x) return x;
-        else return parent[x] = findParent(parent[x]);
+        return parent[x] = findP(parent[x]);
     }
 
     private static void makeSet() {
