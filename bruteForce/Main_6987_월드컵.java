@@ -4,9 +4,9 @@ import java.util.*;
 import java.io.*;
 
 public class Main_6987_월드컵 {
-    static final int T = 4;
+    static final int T = 4;     // 테스트 케이스 수
     static int[][] game;
-    static int[][] match = new int[15][2];
+    static int[][] match = new int[15][2];   // A-BCDEF / B-CDEF ... 저장
     static boolean isPossible;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -27,7 +27,7 @@ public class Main_6987_월드컵 {
                 int draw = Integer.parseInt(st.nextToken());
                 int lose = Integer.parseInt(st.nextToken());
 
-                if(win + draw + lose != 5){
+                if(win + draw + lose != 5){ // 한 팀당 경기수가 5가 넘을 경우
                     System.out.print("0 "); continue tc;
                 }
 
@@ -42,8 +42,12 @@ public class Main_6987_월드컵 {
         }
     }
 
+
+    /*
+        만약 유효하지 않은 경기 결과라면, round 15회를 돌지 못한 채 끝남
+     */
     private static void doGame(int round) {
-        if(round == 15){
+        if(round == 15){    // 유효한 경기 결과
             isPossible = true;
             return;
         }
@@ -51,22 +55,20 @@ public class Main_6987_월드컵 {
         int t1 = match[round][0];
         int t2 = match[round][1];
 
-        // t1: 승 / t2: 패
-        if(game[t1][0] > 0 && game[t2][2] > 0){
+        // 각 팀에 승/패/무 cnt가 남아있어야 함
+        if(game[t1][0] > 0 && game[t2][2] > 0){ // t1: 승 / t2: 패
             game[t1][0] --; game[t2][2] --;
             doGame(round+1);
-            game[t1][0] ++; game[t2][2] ++;
+            game[t1][0] ++; game[t2][2] ++; // 다시 돌려놓고 다음 경우 실행
         }
 
-        // t1: 무 / t2: 무
-        if(game[t1][1] > 0 && game[t2][1] > 0){
+        if(game[t1][1] > 0 && game[t2][1] > 0){ // t1: 무 / t2: 무
             game[t1][1] --; game[t2][1] --;
             doGame(round+1);
             game[t1][1] ++; game[t2][1] ++;
         }
 
-        // t1: 패 / t2: 승
-        if(game[t1][2] > 0 && game[t2][0] > 0){
+        if(game[t1][2] > 0 && game[t2][0] > 0){ // t1: 패 / t2: 승
             game[t1][2] --; game[t2][0] --;
             doGame(round+1);
             game[t1][2] ++; game[t2][0] ++;

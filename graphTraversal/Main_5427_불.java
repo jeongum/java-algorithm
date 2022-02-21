@@ -53,18 +53,30 @@ public class Main_5427_불 {
         while(!q.isEmpty()){
             int[] cur = q.poll();
 
-            if(time != cur[2]){     // depth 늘어날 때마다 불 확산
+            /*
+                1. depth 늘어날 때마다 불 확산: 해주지 않으면 같은 초에서도 계속 불이 확산되는 상황 발생
+             */
+            if(time != cur[2]){
                 spreadFire();
                 time = cur[2];
             }
 
-            if(map[cur[0]][cur[1]] == '*') continue;       // 가려는 길에 불이 확산되어 있으면
+            /*
+                2. 가려는 길에 불이 확산되어 있으면 다음 경로 탐색
+             */
+            if(map[cur[0]][cur[1]] == '*') continue;
 
-            if(cur[0] == 0 || cur[0] == N-1 || cur[1] == 0 || cur[1] == M-1){       // 종료조건: 모서리에 있을 경우
+            /*
+                3. 종료 조건 체크
+             */
+            if(cur[0] == 0 || cur[0] == N-1 || cur[1] == 0 || cur[1] == M-1){
                 res = cur[2]+1; // 건물 밖으로 나가는 시간까지 +1
                 return;
             }
 
+            /*
+                상근이 이동 가능 경로 탐색
+             */
             for(int d = 0; d < 4 ; d ++){
                 int ni = cur[0] + di[d];
                 int nj = cur[1] + dj[d];
