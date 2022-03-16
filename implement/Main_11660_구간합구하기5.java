@@ -10,7 +10,7 @@ public class Main_11660_구간합구하기5 {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
         int[][] map = new int[N][N];
-        int[][] sum = new int[N][N];
+        int[][] sum = new int[N][N]; // 0,0부터 i,j까지 합 저장
         for(int i =0 ; i < N ; i++){
             st = new StringTokenizer(br.readLine());
             for(int j =0 ; j < N ; j++){
@@ -34,6 +34,13 @@ public class Main_11660_구간합구하기5 {
             int x2 = Integer.parseInt(st.nextToken())-1;
             int y2 = Integer.parseInt(st.nextToken())-1;
 
+            /**
+             * 줄 단위로 더해줌
+             * [ ][ ][ ][ ][ ]
+             * [ ][ ][o][o][ ] -> o 부분 합: sum(2,5) - sum(2,2)
+             * [ ][ ][o][o][ ] -> o 부분 합: sum(3,5) - sum(3,2)
+             *  => o의 최종 부분 합: ( sum(2,5) - sum(2,2) ) + ( sum(3,5) - sum(3,2) )
+             */
             int partial = 0;
             for(int j = x1 ; j <= x2 ; j++){
                 if(y1 == 0 && j == 0) partial += sum[j][y2];

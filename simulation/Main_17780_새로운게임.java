@@ -5,11 +5,13 @@ import java.io.*;
 
 public class Main_17780_새로운게임 {
     static class Mark{
-        int i, j;
+        int i, j, d;
+        boolean isStacked;
         Deque<Integer> dirs = new ArrayDeque<>();
-        public Mark(int i, int j) {
+        public Mark(int i, int j, int d) {
             this.i = i;
             this.j = j;
+            this.d = d;
         }
     }
     static int[] di = {0, 0, -1, 1};
@@ -35,37 +37,33 @@ public class Main_17780_새로운게임 {
             int x = Integer.parseInt(st.nextToken())-1;
             int y = Integer.parseInt(st.nextToken())-1;
             int d = Integer.parseInt(st.nextToken())-1;
-            marks.add(new Mark(x, y));
-            marks.get(i).dirs.addLast(d);
+            marks.add(new Mark(x, y, d));
+            marks.get(i).dirs.add(i);
         }
 
         System.out.println(doGame());
     }
 
     private static int doGame() {
-        int turn = 0;
+        int turn = 1;
         end: while(turn < 1000){
-            List<Mark> tmp = new ArrayList<>();
-            for(int k = 0 ; k < marks.size() ; k++){
-                Mark m = marks.get(k);
-                int d = m.dirs.peekFirst();
+            for(Mark m:marks){
+                if(m.isStacked) continue;
+                int d = m.d;
                 int ni = m.i + di[d];
                 int nj = m.j + dj[d];
                 if(ni<0||ni>=N||nj<0||nj>=N||map[ni][nj]==2){
-                    int dir = m.dirs.pollFirst();
+                    int dir = m.d;
                     switch (dir){
-                        case 0: m.dirs.offerFirst(1); break;
-                        case 1: m.dirs.offerFirst(0); break;
-                        case 2: m.dirs.offerFirst(3); break;
-                        case 3: m.dirs.offerFirst(2); break;
+                        case 0: m.d = 1; break;
+                        case 1: m.d = 0; break;
+                        case 2: m.d = 3; break;
+                        case 3: m.d = 2; break;
                     }
-                    dir = m.dirs.peekFirst();
+                    dir = m.d;
                     ni = m.i + di[dir];
                     nj = m.j + dj[dir];
-                    if(ni<0||ni>=N||nj<0||nj>=N){
-                        tmp.add(m);
-                        continue;
-                    }
+                    if(ni<0||ni>=N||nj<0||nj>=N) continue;
                 }
                 if(map[ni][nj] == 1){
                     Mark exist = isExist(ni, nj);
@@ -74,16 +72,19 @@ public class Main_17780_새로운게임 {
                             exist.dirs.offerLast(m.dirs.pollLast());
                         }
                         if(exist.dirs.size() >= 4) break end;
+                        m.isStacked = true;
                     }
                     else{
                         Deque<Integer> dq = new ArrayDeque<>();
+                        Mark down = (m.dirs.isEmpty())? m : marks.get(m.dirs.peekLast());
+                        m.isStacked = true;
                         while(!m.dirs.isEmpty()){
                             dq.offerLast(m.dirs.pollLast());
                         }
-                        m.dirs = dq;
-                        m.i = ni;
-                        m.j = nj;
-                        tmp.add(m);
+                        down.dirs = dq;
+                        down.isStacked = false;
+                        down.i = ni;
+                        down.j = nj;
                     }
                 }
                 else if(map[ni][nj] == 0){
@@ -93,23 +94,22 @@ public class Main_17780_새로운게임 {
                             exist.dirs.offerLast(m.dirs.pollFirst());
                         }
                         if(exist.dirs.size() >= 4) break end;
+                        m.isStacked = true;
                     }
                     else{
                         m.i = ni;
                         m.j = nj;
-                        tmp.add(m);
                     }
                 }
             }
             turn ++;
-            marks = tmp;
         }
         return (turn>=1000)?-1:turn;
     }
 
     private static Mark isExist(int i, int j) {
         for(Mark m : marks){
-            if(m.i == i && m.j == j) return m;
+            if(m.i == i && m.j == j && !m.isStacked) return m;
         }
         return null;
     }
