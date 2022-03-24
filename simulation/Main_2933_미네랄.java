@@ -1,9 +1,10 @@
 package simulation;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.*;
-import java.io.*;
 
-public class Main_18500_미네랄2 {
+public class Main_2933_미네랄 {
     static int[] di = {-1, 0, 1, 0};
     static int[] dj = {0, 1, 0, -1};
     static int R, C;
