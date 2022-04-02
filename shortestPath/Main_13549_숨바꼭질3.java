@@ -9,42 +9,41 @@ public class Main_13549_숨바꼭질3{
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-        int[] map = new int[200000];
-        boolean[] visited = new boolean[200000];
 
-        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+        System.out.println(dijkstra(N, K));;
+
+    }
+
+    private static int dijkstra(int n, int k) {
+        PriorityQueue<int[]> q = new PriorityQueue<>(new Comparator<int[]>() {
             @Override
             public int compare(int[] o1, int[] o2) {
-                return Integer.compare(o1[1], o2[2]);
+                return Integer.compare(o1[1], o2[1]);
             }
         });
+        int[] dist = new int[100001];
+        Arrays.fill(dist, Integer.MAX_VALUE);
 
-        Arrays.fill(map, Integer.MAX_VALUE);
-
-        pq.offer(new int[]{N, 0});
-        map[N] = 0;
-        visited[N] = true;
-        int res = 0;
-        while (!pq.isEmpty()){
-            int[] cur = pq.poll();
-            if(cur[0] == K){
-                res = cur[1];
+        q.offer(new int[]{n, 0});
+        dist[n] = 0;
+        while (!q.isEmpty()){
+            int[] cur = q.poll();
+            if(dist[cur[0]] < cur[1]) continue;
+            if(cur[0] == k){
                 break;
             }
-
-            if(cur[0]+1 < 200000 && !visited[cur[0]+1]){
-                pq.offer(new int[]{cur[0]+1, cur[1]+1});
-                visited[cur[0]+1] = true;
+            int[] ni = new int[]{cur[0]-1, cur[0]+1, cur[0]*2};
+            for(int i =0 ; i < 3; i++){
+                if(0<=ni[i]&&ni[i]<100001){
+                    int sec = (i == 0 || i == 1)? 1:0;
+                    if(dist[ni[i]] > dist[cur[0]] + sec){
+                        q.offer(new int[]{ni[i], dist[cur[0]] + sec});
+                        dist[ni[i]] = dist[cur[0]] + sec;
+                    }
+                }
             }
-            if(cur[0]-1 >= 0){
-                pq.offer(new int[]{cur[0]-1, cur[1]+1});
-                visited[cur[0]+1] = true;
-            }
-            if(cur[0]*2 < 200000 && !visited[cur[0]*2]){
-                pq.offer(new int[]{cur[0]*2, cur[1]+1});
-                visited[cur[0]*2] = true;
-            }
-
         }
+
+        return dist[k];
     }
 }
