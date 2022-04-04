@@ -15,12 +15,7 @@ public class Main_13549_숨바꼭질3{
     }
 
     private static int dijkstra(int n, int k) {
-        PriorityQueue<int[]> q = new PriorityQueue<>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return Integer.compare(o1[1], o2[1]);
-            }
-        });
+        PriorityQueue<int[]> q = new PriorityQueue<>(((o1, o2) -> Integer.compare(o1[1], o2[1])));
         int[] dist = new int[100001];
         Arrays.fill(dist, Integer.MAX_VALUE);
 
@@ -32,10 +27,10 @@ public class Main_13549_숨바꼭질3{
             if(cur[0] == k){
                 break;
             }
-            int[] ni = new int[]{cur[0]-1, cur[0]+1, cur[0]*2};
+            int[] ni = new int[]{cur[0]-1, cur[0]+1, cur[0]*2};     // 갈 수 있는 인덱스
             for(int i =0 ; i < 3; i++){
                 if(0<=ni[i]&&ni[i]<100001){
-                    int sec = (i == 0 || i == 1)? 1:0;
+                    int sec = (i == 0 || i == 1)? 1:0;  // *2 는 순간이동이므로 시간이 추가되지 않음
                     if(dist[ni[i]] > dist[cur[0]] + sec){
                         q.offer(new int[]{ni[i], dist[cur[0]] + sec});
                         dist[ni[i]] = dist[cur[0]] + sec;
