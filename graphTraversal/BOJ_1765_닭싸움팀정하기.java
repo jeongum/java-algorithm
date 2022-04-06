@@ -4,50 +4,67 @@ import java.util.*;
 import java.io.*;
 
 public class BOJ_1765_닭싸움팀정하기 {
-    static char[][] relation;
-    static boolean[] visited;
-    static int N, M;
+    static class Student{
+        HashSet<Integer> friends;
+        HashSet<Integer> enemies;
+        public Student() {
+            this.friends = new HashSet<>();
+            this.enemies = new HashSet<>();
+        }
+    }
+    static Student[] students;
+    static int n;
+    static boolean[] visited ;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        M = Integer.parseInt(br.readLine());
-        relation = new char[N][N];
-        visited = new boolean[N];
-        for (int i = 0; i < M; i++) {
+        n = Integer.parseInt(br.readLine());
+        students = new Student[n];
+        for(int i =0 ; i < n ; i++) students[i] = new Student();
+        visited = new boolean[n];
+
+        int m = Integer.parseInt(br.readLine());
+        for(int i =0 ; i < m ; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
             char r = st.nextToken().charAt(0);
-            int p = Integer.parseInt(st.nextToken()) - 1;
-            int q = Integer.parseInt(st.nextToken()) - 1;
-            relation[p][q] = r;
-            relation[q][p] = r;
-        }
-
-        int result = 0;
-        for(int i =0 ; i < N ; i++){
-            if(!visited[i]){
-                visited[i] = true;
-                makeRelation(i);
-                result++;
-            }
-        }
-        System.out.println(result);
-    }
-
-    private static void makeRelation(int target) {
-        for(int i = 0 ; i < N ; i++){
-            if(visited[i]) continue;
-            if(relation[target][i] == 'E'){
-                for(int j = 0 ; j < N ; j++){
-                    if(!visited[j] && j != target && relation[i][j] == 'E'){
-                        visited[j] = true;
-                        makeRelation(j);
-                    }
+            int p = Integer.parseInt(st.nextToken())-1;
+            int q = Integer.parseInt(st.nextToken())-1;
+            switch (r){
+                case 'E':{
+                    students[p].enemies.add(q);
+                    students[q].enemies.add(p);
+                    enemyFriends(p, q);             // 서로의 적을 상대방의 친구로 추가함
+                    break;
+                }
+                case 'F':{
+                    students[p].friends.add(q);
+                    students[q].friends.add(p);
+                    break;
                 }
             }
-            else if(relation[target][i] == 'F'){
-                visited[i] = true;
-                makeRelation(i);
-            }
+        }
+        int cnt = 0;
+        for(int i =0 ; i < n ; i++){
+            if(visited[i]) continue;
+            findFriends(i);
+            cnt++;
+        }
+        System.out.println(cnt);
+    }
+
+    private static void findFriends(int p) {
+        if(visited[p]) return;
+        visited[p] = true;
+        for(Integer i : students[p].friends){
+            findFriends(i);
+        }
+    }
+
+    private static void enemyFriends(int p, int q) {
+        for(Integer i: students[q].enemies){        // q의 적들을 p의 친구로 추가
+            students[p].friends.add(i);
+        }
+        for(Integer i : students[p].enemies){       // p의 적들을 q의 친구로 추가
+            students[q].friends.add(i);
         }
     }
 }
