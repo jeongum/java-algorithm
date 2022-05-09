@@ -1,4 +1,4 @@
-package bruteForce;
+package brute_force;
 
 import java.util.*;
 import java.io.*;
