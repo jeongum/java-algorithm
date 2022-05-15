@@ -1,4 +1,4 @@
-package brute_force;
+package dynamic_programming;
 
 import java.io.*;
 import java.util.*;

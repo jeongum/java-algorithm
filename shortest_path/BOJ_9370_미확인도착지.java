@@ -36,7 +36,7 @@ public class BOJ_9370_미확인도착지 {
                     path[b].add(new int[]{a, d*2});
                 }
             }
-            // 목적지까지 최단거리를 가는데, 중간에 g,h를 건넌다면 OK
+
             dijkstra();
 
             int[] dest = new int[t];
